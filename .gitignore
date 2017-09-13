@@ -2,3 +2,5 @@ node_modules/**/*
 .expo/*
 npm-debug.*
 config/
+api/config/
+api/node_modules/
