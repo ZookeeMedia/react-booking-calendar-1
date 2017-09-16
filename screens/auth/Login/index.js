@@ -21,7 +21,7 @@ class Login extends Component {
   }
 
   handleOnSubmit({ email, password }) {
-    this.props.loginUser(email, password);
+    this.props.loginUser(email, password, () => this.props.navigation.navigate('main'));
   }
 
   render() {

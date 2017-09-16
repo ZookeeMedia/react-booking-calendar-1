@@ -5,7 +5,7 @@ import { AUTH_USER, AUTH_ERROR, DEAUTH_USER } from './types';
 
 const ROOT_URL = 'http://localhost:8080';
 
-export function loginUser(email, password) {
+export function loginUser(email, password, callBack) {
   const request = `${ROOT_URL}/login`;
 
   return (dispatch) => {
@@ -15,6 +15,7 @@ export function loginUser(email, password) {
           type: AUTH_USER,
         });
         AsyncStorage.setItem('token', data.token);
+        callBack();
       }).catch(() => {
         dispatch({
           type: AUTH_ERROR,
@@ -24,7 +25,7 @@ export function loginUser(email, password) {
   }
 }
 
-export function signupUser(email, password, first_name, last_name, phone) {
+export function signupUser(email, password, first_name, last_name, phone, callBack) {
   const request = `${ROOT_URL}/signup`;
 
   return (dispatch) => {
@@ -34,6 +35,7 @@ export function signupUser(email, password, first_name, last_name, phone) {
           type: AUTH_USER,
         });
         AsyncStorage.setItem('token', data.token);
+        callBack();
       }).catch(() => {
         dispatch({
           type: AUTH_ERROR,
