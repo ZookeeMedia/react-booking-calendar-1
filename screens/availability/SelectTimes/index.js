@@ -1,22 +1,34 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Button } from 'react-native';
+import { Button } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as actions from '../../../actions';
+import AvailabilityBlocksList from './components/AvailabilityBlocksList';
 
 @connect(null, actions)
 class SelectTimes extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: moment(new Date(navigation.state.params.year, navigation.state.params.month, navigation.state.params.day)).format('Do of MMMM YYYY'),
-    tabBarIcon: ({ tintColor }) => <Icon name="calendar-clock" type="material-community" color={tintColor} size={30} />,
-    headerRight: navigation.state.params.onPressSubmitButton ? <Button title="Submit" onPress={navigation.state.params.onPressSubmitButton} /> : null
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { year, month, day, onPressSubmitButton } = navigation.state.params;
 
-  constructor(props) {
-    super(props);
+    return {
+      title: moment(new Date(year, month, day)).format('Do of MMMM YYYY'),
+      tabBarIcon: ({ tintColor }) => (
+        <Icon
+          name="calendar-clock"
+          type="material-community"
+          color={tintColor}
+          size={30}
+        />
+      ),
+      headerRight: onPressSubmitButton ? <Button title="Submit" onPress={onPressSubmitButton} /> : null
+    }
+  };
+
+  constructor() {
+    super();
     this.onPressBlock = this.onPressBlock.bind(this);
     this.onPressSubmitButton = this.onPressSubmitButton.bind(this);
   }
@@ -28,49 +40,31 @@ class SelectTimes extends Component {
   }
 
   onPressSubmitButton() {
-    this.props.makeBooking(this.state.selectedBlocks, () => this.props.navigation.navigate('bookingsUser'));
+    const { makeBooking, getBookings, navigation } = this.props;
+
+    makeBooking(this.state.selectedBlocks, () => {getBookings(); navigation.navigate('bookingsUser')});
   }
 
   onPressBlock(block) {
-    if (this.state.selectedBlocks.indexOf(block) === -1) {
-      this.setState(prevState => ({ selectedBlocks: [ ...this.state.selectedBlocks, block ] }))
+    const { selectedBlocks } = this.state;
+
+    if (selectedBlocks.indexOf(block) === -1) {
+      this.setState(prevState => ({ selectedBlocks: [ ...selectedBlocks, block ] }))
     } else {
-      this.setState(prevState => ({ selectedBlocks: this.state.selectedBlocks.filter(current => current !== block) }))
+      this.setState(prevState => ({ selectedBlocks: selectedBlocks.filter(current => current !== block) }))
     }
-  }
-
-  renderAvailabilityBlocks() {
-    const { availabilityBlocks, year, month, day } = this.props.navigation.state.params;
-    return availabilityBlocks.map(block => {
-      const start = new Date(year, month, day, 0, block.block * 15);
-      const end = new Date(year, month, day, 0, 15 + block.block * 15);
-
-      return (
-        <TouchableOpacity key={block.id} onPress={() => this.onPressBlock(block.id)}>
-          <View style={styles.blocksStyle(block.id, this.state.selectedBlocks)}>
-            <Text style={{ textAlign: 'center' }}>
-              {moment(start).format('hh:mm a')} - {moment(end).format('hh:mm a')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-    );
-    });
   }
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        {this.renderAvailabilityBlocks()}
-      </View>
+        <AvailabilityBlocksList
+          selectedBlocks={this.state.selectedBlocks}
+          params={this.props.navigation.state.params}
+          onPressSubmitButton={this.onPressSubmitButton}
+          onPressBlock={this.onPressBlock}
+        />
     )
   }
 }
-
-const styles = {
-  blocksStyle: (block, selectedBlocks) => ({
-    backgroundColor: selectedBlocks.indexOf(block) > -1 ? '#7ae899' : '#ddd',
-    paddingVertical: 10
-  })
-};
 
 export default SelectTimes;
