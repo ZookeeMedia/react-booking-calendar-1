@@ -24,8 +24,8 @@ CREATE TABLE availability_blocks(
 CREATE TABLE bookings(
   id INT AUTO_INCREMENT PRIMARY KEY,
   status VARCHAR(50) NOT NULL,
-  user_id INT,
-  availability_block_id INT,
+  user_id INT NOT NULL,
+  availability_block_id INT NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(availability_block_id) REFERENCES availability_blocks(id)
 );

@@ -5,7 +5,7 @@ import { AVAILABILITY_FETCH_MONTH, AVAILABILITY_FETCH_ERROR } from './types';
 
 const ROOT_URL = 'http://localhost:8080';
 
-export function getAvailability(monthsFromNow = 0) {
+export function getAvailability(monthsFromNow = 0, callBack) {
   const currentMonth = new Date().getMonth() + 1;
   const days = new Date(new Date().getFullYear(), new Date().getMonth() + (1 + monthsFromNow), 0).getDate();
   const daysInMonth = Array.from({length: days}, (v, i) => i);
@@ -18,12 +18,13 @@ export function getAvailability(monthsFromNow = 0) {
 
   return async (dispatch) => {
     // console.log(daysInMonth);
-    let token = AsyncStorage.getItem('token');
+    let token = await AsyncStorage.getItem('token');
     axios.get(request, { headers: { authorization: token }})
       .then(({data}) => {
         const payload = {
           availabilityBlocks: data,
           month,
+          year,
           daysInMonth,
           firstDayOfMonth
         }
@@ -31,6 +32,9 @@ export function getAvailability(monthsFromNow = 0) {
           type: AVAILABILITY_FETCH_MONTH,
           payload,
         })
+        if (callBack) {
+          callBack();
+        }
       }).catch(() => {
         dispatch({
           type: AVAILABILITY_FETCH_ERROR,

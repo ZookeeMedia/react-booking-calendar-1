@@ -25,4 +25,6 @@ module.exports = (app) => {
 
   // get bookings done by a user
   app.get('/bookings', requireAuth, bookings.byUser);
+  // let user make booking
+  app.post('/bookings', requireAuth, bookings.makeBooking);
 }

@@ -8,6 +8,8 @@ import store from './store';
 import Login from './screens/auth/Login/';
 import Signup from './screens/auth/Signup/';
 import AvailabilityCalendar from './screens/availability/AvailabilityCalendar/';
+import SelectTimes from './screens/availability/SelectTimes/';
+import BookingsOverviewUser from './screens/bookings/BookingsOverviewUser/';
 
 export default class App extends React.Component {
   render() {
@@ -17,8 +19,16 @@ export default class App extends React.Component {
         signup: { screen: Signup },
       }) },
       main: { screen: new TabNavigator({
-        availability: { screen: AvailabilityCalendar },
-      }) },
+        availability: { screen: new StackNavigator({
+          availabilityCalendar: { screen: AvailabilityCalendar },
+          selectTimes: { screen: SelectTimes },
+        }) },
+        bookings: { screen: new StackNavigator({
+          bookingsUser: { screen: BookingsOverviewUser }
+        }) }
+      }, { tabBarOptions: { showLabel: false } }),
+
+    },
     }, { navigationOptions: { tabBarVisible: false }
   })
 
