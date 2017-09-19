@@ -11,13 +11,14 @@ const reduceBookings = (bookings) => {
     if (accumulator[booking.day] === undefined) {
       accumulator[booking.day] = [];
     }
-    accumulator[booking.day].push({ block: booking.block, id: booking.id, day: booking.day });
-    accumulator[booking.day].sort((a, b) => a.block - b.block);
+    accumulator[booking.day].push(booking);
+    // accumulator[booking.day].sort((a, b) => a.block - b.block);
     return accumulator;
   }, {});
 }
 
 export default function(state = INITIAL_STATE, action) {
+
   switch(action.type) {
     case BOOKINGS_FETCH:
       return {

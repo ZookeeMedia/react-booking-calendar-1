@@ -27,5 +27,6 @@ CREATE TABLE bookings(
   user_id INT NOT NULL,
   availability_block_id INT NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(availability_block_id) REFERENCES availability_blocks(id)
+  FOREIGN KEY(availability_block_id) REFERENCES availability_blocks(id),
+  UNIQUE KEY(availability_block_id)
 );

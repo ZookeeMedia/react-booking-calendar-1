@@ -7,9 +7,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import store from './store';
 import Login from './screens/auth/Login/';
 import Signup from './screens/auth/Signup/';
-import AvailabilityCalendar from './screens/availability/AvailabilityCalendar/';
-import SelectTimes from './screens/availability/SelectTimes/';
+import AvailabilityCalendarUser from './screens/availability/AvailabilityCalendarUser/';
+import SelectTimesUser from './screens/availability/SelectTimesUser/';
 import BookingsOverviewUser from './screens/bookings/BookingsOverviewUser/';
+import AvailabilityCalendarAdmin from './screens/availability/AvailabilityCalendarAdmin/';
+import SelectTimesAdmin from './screens/availability/SelectTimesAdmin/';
+import BookingsOverviewAdmin from './screens/bookings/BookingsOverviewAdmin/';
+import ShowBookingAdmin from './screens/bookings/ShowBookingAdmin/';
 
 export default class App extends React.Component {
   render() {
@@ -18,18 +22,30 @@ export default class App extends React.Component {
         login: { screen: Login },
         signup: { screen: Signup },
       }) },
-      main: { screen: new TabNavigator({
-        availability: { screen: new StackNavigator({
-          availabilityCalendar: { screen: AvailabilityCalendar },
-          selectTimes: { screen: SelectTimes },
+      user: { screen: new TabNavigator({
+        availabilityUser: { screen: new StackNavigator({
+          availabilityCalendarUser: { screen: AvailabilityCalendarUser },
+          selectTimesUser: { screen: SelectTimesUser },
         }) },
-        bookings: { screen: new StackNavigator({
-          bookingsUser: { screen: BookingsOverviewUser }
+        bookingsUser: { screen: new StackNavigator({
+          bookingsOverviewUser: { screen: BookingsOverviewUser }
         }) }
       }, { tabBarOptions: { showLabel: false } }),
 
     },
-    }, { navigationOptions: { tabBarVisible: false }
+    admin: { screen: new TabNavigator({
+      availabilityAdmin: { screen: new StackNavigator({
+        availabilityCalendarAdmin: { screen: AvailabilityCalendarAdmin },
+        selectTimesAdmin: { screen: SelectTimesAdmin },
+      }) },
+      bookingsAdmin: { screen: new StackNavigator({
+        bookingsOverviewAdmin: { screen: BookingsOverviewAdmin },
+        showBookingAdmin: { screen: ShowBookingAdmin },
+      }) }
+    }, { tabBarOptions: { showLabel: false } }),
+
+  },
+}, { lazy: true, navigationOptions: { tabBarVisible: false }
   })
 
     return (

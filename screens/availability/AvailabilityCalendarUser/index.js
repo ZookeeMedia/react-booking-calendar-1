@@ -17,7 +17,7 @@ import * as actions from '../../../actions';
   firstDayOfMonth: state.availability.firstDayOfMonth,
   error: state.availability.error,
 }), actions)
-class AvailabilityCalendar extends Component {
+class AvailabilityCalendarUser extends Component {
   static navigationOptions = {
     title: 'Availability',
     tabBarIcon: ({ tintColor }) => <Icon name="calendar" type="material-community" color={tintColor} size={30} />,
@@ -65,4 +65,4 @@ class AvailabilityCalendar extends Component {
   }
 }
 
-export default AvailabilityCalendar;
+export default AvailabilityCalendarUser;

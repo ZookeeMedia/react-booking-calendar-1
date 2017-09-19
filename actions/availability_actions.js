@@ -17,7 +17,6 @@ export function getAvailability(monthsFromNow = 0, callBack) {
   const request = `${ROOT_URL}/availability?month=${month}&year=${year}`;
 
   return async (dispatch) => {
-    // console.log(daysInMonth);
     let token = await AsyncStorage.getItem('token');
     axios.get(request, { headers: { authorization: token }})
       .then(({data}) => {

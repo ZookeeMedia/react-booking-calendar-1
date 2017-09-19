@@ -9,7 +9,7 @@ import * as actions from '../../../actions';
 import AvailabilityBlocksList from './components/AvailabilityBlocksList';
 
 @connect(null, actions)
-class SelectTimes extends Component {
+class SelectTimesUser extends Component {
   static navigationOptions = ({ navigation }) => {
     const { year, month, day, onPressSubmitButton } = navigation.state.params;
 
@@ -42,7 +42,7 @@ class SelectTimes extends Component {
   onPressSubmitButton() {
     const { makeBooking, getBookings, navigation } = this.props;
 
-    makeBooking(this.state.selectedBlocks, () => {getBookings(); navigation.navigate('bookingsUser')});
+    makeBooking(this.state.selectedBlocks, () => {getBookings(); navigation.navigate('bookingsOverViewUser')});
   }
 
   onPressBlock(block) {
@@ -67,4 +67,4 @@ class SelectTimes extends Component {
   }
 }
 
-export default SelectTimes;
+export default SelectTimesUser;

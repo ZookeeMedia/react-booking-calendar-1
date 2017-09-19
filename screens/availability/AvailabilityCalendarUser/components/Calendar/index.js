@@ -46,7 +46,7 @@ class Calendar extends Component {
     console.log(this.props.availabilityBlocks);
     return daysInMonth.map((day, i) => (
       <View style={styles.days(day + 1, this.props.firstDayOfMonth, this.props.availabilityBlocks)} key={day}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('selectTimes',
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('selectTimesUser',
           { year: this.props.year, month: this.props.month - 1, day: day + 1, availabilityBlocks: this.props.availabilityBlocks[day + 1] })}>
           <Text>{day + 1}</Text>
         </TouchableOpacity>
@@ -56,7 +56,7 @@ class Calendar extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity onPress={() => this.props.fetchAvailability('previous')}>
             <Icon name='chevron-left' />

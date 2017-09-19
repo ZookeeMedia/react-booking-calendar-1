@@ -7,3 +7,4 @@ export const BOOKING_MADE = 'booking_made';
 export const BOOKING_ERROR = 'booking_error';
 export const BOOKINGS_FETCH = 'booking_fetch';
 export const BOOKINGS_FETCH_ERROR = 'booking_fetch_error';
+export const BOOKING_DELETE_ERROR = 'booking_delete_error';
