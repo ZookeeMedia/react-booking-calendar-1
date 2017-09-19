@@ -9,7 +9,7 @@ exports.login = (req, res) => {
   const timestamp = new Date().getTime();
   const payload = { sub: req.user.id, iat: timestamp };
   const token = jwt.encode(payload, secret);
-  res.json({ token });
+  res.json({ token, role: req.user.role });
 }
 
 exports.signup = (req, res) => {
@@ -25,7 +25,7 @@ exports.signup = (req, res) => {
         const timestamp = new Date().getTime();
         const payload = { sub: results.insertId, iat: timestamp };
         const token = jwt.encode(payload, secret);
-        res.json({ token });
+        res.json({ token, role: 'user' });
       });
     });
   });

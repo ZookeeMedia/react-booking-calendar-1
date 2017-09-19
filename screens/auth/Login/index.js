@@ -14,14 +14,19 @@ class Login extends Component {
   }
 
   async componentWillMount() {
+
     let token = await AsyncStorage.getItem('token');
-    if (token) {
-      this.props.navigation.navigate('main')
+    let role = await AsyncStorage.getItem('role');
+
+    if (token && role === 'user') {
+      this.props.navigation.navigate('user')
+    } else if (token && role === 'admin') {
+      this.props.navigation.navigate('admin')
     }
   }
 
   handleOnSubmit({ email, password }) {
-    this.props.loginUser(email, password, () => this.props.navigation.navigate('main'));
+    this.props.loginUser(email, password, this.props.navigation.navigate);
   }
 
   render() {

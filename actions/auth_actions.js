@@ -5,7 +5,7 @@ import { AUTH_USER, AUTH_ERROR, DEAUTH_USER } from './types';
 
 const ROOT_URL = 'http://localhost:8080';
 
-export function loginUser(email, password, callBack) {
+export function loginUser(email, password, navigate) {
   const request = `${ROOT_URL}/login`;
 
   return (dispatch) => {
@@ -15,7 +15,12 @@ export function loginUser(email, password, callBack) {
           type: AUTH_USER,
         });
         AsyncStorage.setItem('token', data.token);
-        callBack();
+        AsyncStorage.setItem('role', data.role);
+        if (data.role === 'user') {
+          navigate('availabilityCalendarUser');
+        } else if (data.role === 'admin') {
+          navigate('availabilityCalendarAdmin');
+        }
       }).catch(() => {
         dispatch({
           type: AUTH_ERROR,
@@ -42,5 +47,17 @@ export function signupUser(email, password, first_name, last_name, phone, callBa
           payload: 'please choose another email'
         })
       })
+  }
+}
+
+export function logoutUser(callback) {
+  return (dispatch) => {
+    dispatch({
+      type: DEAUTH_USER
+    });
+    AsyncStorage.clear();
+    if(callback) {
+      callback();
+    }
   }
 }
