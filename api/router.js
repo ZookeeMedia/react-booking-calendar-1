@@ -24,7 +24,9 @@ module.exports = (app) => {
   // Booking Routes //
 
   // get bookings done by a user
-  app.get('/bookings', requireAuth, bookings.byUser);
+  app.get('/bookings', requireAuth, bookings.getBookings);
   // let user make booking
   app.post('/bookings', requireAuth, bookings.makeBooking);
+  // let user delete booking
+  app.delete('/bookings/:id', requireAuth, bookings.deleteBooking);
 }
