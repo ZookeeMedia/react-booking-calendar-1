@@ -35,12 +35,15 @@ class ShowBookingAdmin extends Component {
         <Button title="Call" onPress={() => communications.phonecall(phone)} />
         <Button
           title="Email"
-          onPress={() => communications.email(email, null, null, `Booking for ${moment(this.props.navigation.state.params.booking.day).format('MMMM Do YYYY')}`)}
+          onPress={() => communications.email(
+            email, null, null,
+            `Booking for ${moment(this.props.navigation.state.params.booking.day).format('MMMM Do YYYY')}`)}
         />
         <Button
           title="Cancel Booking"
           color="#ff0000"
-          onPress={() => {this.props.deleteBooking(booking.id, () => {this.props.getBookingsUser(); this.props.navigation.navigate('bookingsOverviewAdmin'); this.props.getAvailability()});}}
+          onPress={() => {this.props.deleteBooking(booking.id,
+            () => {this.props.getBookingsUser(); this.props.navigation.navigate('bookingsOverviewAdmin'); this.props.getAvailability()});}}
         />
       </View>
     )
