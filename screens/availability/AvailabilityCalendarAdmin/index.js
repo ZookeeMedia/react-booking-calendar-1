@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import Calendar from './components/Calendar/';
+import Calendar from '../components/Calendar/';
 import * as actions from '../../../actions';
 
 @connect(state => ({
@@ -52,6 +52,7 @@ class AvailabilityCalendarUser extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Calendar
+          admin
           fetchAvailability={this.fetchAvailability}
           firstDayOfMonth={this.props.firstDayOfMonth}
           month={this.props.month}

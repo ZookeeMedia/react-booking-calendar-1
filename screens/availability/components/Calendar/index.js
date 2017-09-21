@@ -42,13 +42,15 @@ class Calendar extends Component {
   }
 
   renderDays() {
-    const { daysInMonth } = this.props;
-    console.log(this.props.availabilityBlocks);
+    const { daysInMonth, admin } = this.props;
+
     return daysInMonth.map((day, i) => (
-      <View style={styles.days(day + 1, this.props.firstDayOfMonth, this.props.availabilityBlocks)} key={day}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('selectTimesUser',
+      <View style={styles.dayContainer(day + 1, this.props.firstDayOfMonth)} key={day}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate(admin ? 'selectTimesAdmin': 'selectTimesUser',
           { year: this.props.year, month: this.props.month - 1, day: day + 1, availabilityBlocks: this.props.availabilityBlocks[day + 1] })}>
-          <Text>{day + 1}</Text>
+          <View style={styles.days(day + 1, this.props.firstDayOfMonth, this.props.availabilityBlocks)}>
+            <Text>{day + 1}</Text>
+          </View>
         </TouchableOpacity>
       </View>
     ))
@@ -56,7 +58,7 @@ class Calendar extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
+      <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fff' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <TouchableOpacity onPress={() => this.props.fetchAvailability('previous')}>
             <Icon name='chevron-left' />
@@ -76,6 +78,14 @@ class Calendar extends Component {
 }
 
 const styles = {
+  dayContainer: (day, firstDayOfMonth) => ({
+    height: SCREEN_WIDTH/7.1,
+    width: SCREEN_WIDTH/7.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 5,
+    marginLeft: day === 1 ? firstDayOfMonth * SCREEN_WIDTH/7.1 : 0
+  }),
   monthName: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -89,14 +99,13 @@ const styles = {
     height: SCREEN_WIDTH/7.1
   },
   days: (day, firstDayOfMonth, availableDays) => ({
-    width: SCREEN_WIDTH/7.1,
+    backgroundColor: availableDays[day] ? '#7ae899' : '#ddd',
+    borderRadius: SCREEN_WIDTH/7.7/2,
+    width:SCREEN_WIDTH/7.7,
+    height:SCREEN_WIDTH/7.7,
     justifyContent: 'center',
     alignItems: 'center',
-    height: SCREEN_WIDTH/7.1,
-    backgroundColor: availableDays[day] ? '#7ae899' : '#ddd',
-    borderRadius: SCREEN_WIDTH/7.1/2,
-    marginBottom: 5,
-    marginLeft: day === 1 ? firstDayOfMonth * SCREEN_WIDTH/7.1 : 0
+    // flex: 1,
   })
 }
 
