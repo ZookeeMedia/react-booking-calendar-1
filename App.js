@@ -3,7 +3,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
+import { Constants } from 'expo';
 import store from './store';
 import Login from './screens/auth/Login/';
 import Signup from './screens/auth/Signup/';
@@ -14,6 +15,8 @@ import AvailabilityCalendarAdmin from './screens/availability/AvailabilityCalend
 import SelectTimesAdmin from './screens/availability/SelectTimesAdmin/';
 import BookingsOverviewAdmin from './screens/bookings/BookingsOverviewAdmin/';
 import ShowBookingAdmin from './screens/bookings/ShowBookingAdmin/';
+import UserProfile from './screens/account/UserProfile/';
+import EditUserProfile from './screens/account/EditUserProfile/';
 
 export default class App extends React.Component {
   render() {
@@ -29,8 +32,12 @@ export default class App extends React.Component {
         }) },
         bookingsUser: { screen: new StackNavigator({
           bookingsOverviewUser: { screen: BookingsOverviewUser }
+        }) },
+        account: { screen: new StackNavigator({
+          userProfile: { screen: UserProfile },
+          editUserProfile: { screen: EditUserProfile }
         }) }
-      }, { tabBarOptions: { showLabel: false } }),
+      }, { tabBarPosition: 'bottom', backBehavior: 'none', tabBarOptions: { showLabel: true } }),
 
     },
     admin: { screen: new TabNavigator({
@@ -42,10 +49,10 @@ export default class App extends React.Component {
         bookingsOverviewAdmin: { screen: BookingsOverviewAdmin },
         showBookingAdmin: { screen: ShowBookingAdmin },
       }) }
-    }, { tabBarOptions: { showLabel: false } }),
+    }, { tabBarPosition: 'bottom', tabBarOptions: { showLabel: false, showIcon: true } }),
 
   },
-}, { lazy: true, navigationOptions: { tabBarVisible: false }
+}, {  lazy: true, swipeEnabled: false, backBehavior: 'none', navigationOptions: { tabBarVisible: false }
   })
 
     return (
@@ -60,6 +67,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
     flex: 1,
     backgroundColor: '#fff'
   },

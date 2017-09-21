@@ -1,16 +1,17 @@
 // @flow
 import React from 'react';
 import { Text, View, TextInput } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 export default function RenderField(props) {
   const { input, label, meta: { touched, error } } = props;
   return (
     <View>
-      <Text>{label}</Text>
-      <TextInput {...input} placeholder={label} autoCapitalize='none' />
+      <FormLabel>{label}</FormLabel>
+      <FormInput {...input} placeholder={label} autoCapitalize='none' />
       {touched &&
         ((error &&
-          <Text>{error}</Text>) )}
+          <FormValidationMessage>{error}</FormValidationMessage>) )}
     </View>
   )
 }
