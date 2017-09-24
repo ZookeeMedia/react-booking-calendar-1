@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import Calendar from './components/Calendar/';
+import Calendar from '../components/Calendar/';
 import * as actions from '../../../actions';
 
 @connect(state => ({

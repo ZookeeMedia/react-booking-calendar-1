@@ -42,13 +42,13 @@ class Calendar extends Component {
   }
 
   renderDays() {
-    const { daysInMonth, admin } = this.props;
-
+    const { daysInMonth, admin, availabilityBlocks, firstDayOfMonth } = this.props;
     return daysInMonth.map((day, i) => (
       <View style={styles.dayContainer(day + 1, this.props.firstDayOfMonth)} key={day}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate(admin ? 'selectTimesAdmin': 'selectTimesUser',
-          { year: this.props.year, month: this.props.month - 1, day: day + 1, availabilityBlocks: this.props.availabilityBlocks[day + 1] })}>
-          <View style={styles.days(day + 1, this.props.firstDayOfMonth, this.props.availabilityBlocks)}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate(admin ? 'selectTimesAdmin': availabilityBlocks[day + 1] ? 'selectTimesUser' : null,
+          { year: this.props.year, month: this.props.month - 1, day: day + 1, availabilityBlocks: availabilityBlocks[day + 1] })}>
+          <View style={styles.days(day + 1, firstDayOfMonth, availabilityBlocks)}>
             <Text>{day + 1}</Text>
           </View>
         </TouchableOpacity>
