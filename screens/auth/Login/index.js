@@ -8,20 +8,23 @@ import * as actions from '../../../actions/'
 
 @connect((state) => ({ error: state.auth.error }), actions)
 class Login extends Component {
+  static navigationOptions = {
+    title: 'Login'
+  }
+
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
   async componentWillMount() {
-
     let token = await AsyncStorage.getItem('token');
     let role = await AsyncStorage.getItem('role');
-
     if (token && role === 'user') {
-      this.props.navigation.navigate('user')
+
+      this.props.navigation.navigate('availabilityUser')
     } else if (token && role === 'admin') {
-      this.props.navigation.navigate('admin')
+      this.props.navigation.navigate('availabilityAdmin')
     }
   }
 
@@ -33,9 +36,6 @@ class Login extends Component {
     const { error } = this.props;
     return (
       <View>
-        <Text>
-          Login
-        </Text>
         <LoginForm error={error} handleOnSubmit={this.handleOnSubmit} />
         <Button title="Signup" onPress={() => this.props.navigation.navigate('signup')} />
       </View>

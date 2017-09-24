@@ -29,7 +29,7 @@ export default class App extends React.Component {
         availabilityUser: { screen: new StackNavigator({
           availabilityCalendarUser: { screen: AvailabilityCalendarUser },
           selectTimesUser: { screen: SelectTimesUser },
-        }) },
+        }, { initialRouteName: 'availabilityCalendarUser' }) },
         bookingsUser: { screen: new StackNavigator({
           bookingsOverviewUser: { screen: BookingsOverviewUser }
         }) },
@@ -37,7 +37,7 @@ export default class App extends React.Component {
           userProfile: { screen: UserProfile },
           editUserProfile: { screen: EditUserProfile }
         }) }
-      }, { tabBarPosition: 'bottom', backBehavior: 'none', tabBarOptions: { showLabel: true } }),
+      }, { lazy: true, initialRouteName: 'availabilityUser', tabBarPosition: 'bottom', backBehavior: 'none', tabBarOptions: { showLabel: true } }),
 
     },
     admin: { screen: new TabNavigator({
