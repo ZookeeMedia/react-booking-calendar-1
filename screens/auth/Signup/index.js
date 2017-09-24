@@ -7,7 +7,10 @@ import SignupForm from './components/SignupForm/';
 import * as actions from '../../../actions/'
 
 @connect((state) => ({ error: state.auth.error }), actions)
-class Login extends Component {
+class Signup extends Component {
+  static navigationOptions = {
+    title: 'Signup'
+  }
   constructor(props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -15,20 +18,17 @@ class Login extends Component {
 
   handleOnSubmit({ email, password, first_name, last_name, phone }) {
     this.props.signupUser(email, password, first_name, last_name, phone,
-      () => this.props.navigation.navigate('availabilityCalendar'));
+      this.props.navigation.navigate);
   }
 
   render() {
     const { error } = this.props;
     return (
       <View>
-        <Text>
-          Login
-        </Text>
         <SignupForm error={error} handleOnSubmit={this.handleOnSubmit} />
       </View>
     )
   }
 }
 
-export default Login;
+export default Signup;
